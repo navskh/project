@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Put, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Put, Patch, Delete, UseFilters, HttpException, ParseIntPipe, Param } from '@nestjs/common';
+import { HttpExceptionFilter } from 'src/http-exception.filter';
 import { CatsService } from './cats.service';
 
 @Controller('cats')
@@ -8,12 +9,15 @@ export class CatsController {
   // cats/
   @Get()
   getAllCat() {
-    return 'all cat';
+    throw new HttpException('api broken', 401);
+    return 'get all cat api';
   }
 
   // cats/:id
   @Get(':id')
-  getOneCat() {
+  getOneCat(@Param('id', ParseIntPipe) param) {
+    console.log(param);
+    console.log(typeof param);
     return 'one cat';
   }
 
