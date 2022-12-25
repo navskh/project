@@ -5,14 +5,31 @@ import { CatsModule } from './cats/cats.module';
 import { CatsService } from './cats/cats.service';
 import { LoggerMiddleware } from './common/middlewares/logger/logger.middleware';
 import { UsersModule } from './users/users.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
+import * as mongoose from 'mongoose';
 
 @Module({
-  imports: [CatsModule, UsersModule],
+  imports: [
+    CatsModule,
+    UsersModule,
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+    }),
+    MongooseModule.forRoot(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService, CatsService],
 })
+  
 export class AppModule implements NestModule {
+  private readonly isDev: boolean = process.env.MODE === 'dev' ? true : false;
+
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes('cats');
+    mongoose.set('debug', this.isDev);
   }
 }

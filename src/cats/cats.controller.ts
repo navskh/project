@@ -10,36 +10,27 @@ export class CatsController {
 
   // cats/
   @Get()
-  getAllCat() {
-    // throw new HttpException('api broken', 401);
-    return {cats: 'get all cat api'};
-  }
-
-  // cats/:id
-  @Get(':id')
-  getOneCat(@Param('id', ParseIntPipe) param) {
-    // console.log(param);
-    // console.log(typeof param);
-    return 'one cat';
+  getCurrentCat() {
+    return 'current cat';
   }
 
   @Post()
-  createCat() {
-    return 'create cat';
+  async signUp() {
+    return 'signup';
   }
 
-  @Put(':id')
-  updateCat() {
-    return 'update cat';
+  @Post('login')
+  logIn() {
+    return 'login';
   }
 
-  @Patch(':id')
-  updatePartialCat() {
-    return;
+  @Post('logout')
+  logOut() {
+    return 'logOut';
   }
 
-  @Delete()
-  deleteCat() {
-    return 'delete service';
+  @Post('upload/cats')
+  uploadCatImg() {
+    return 'uploadImg';
   }
 }
