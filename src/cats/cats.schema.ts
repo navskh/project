@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { Document, SchemaOptions } from 'mongoose';
+import { ApiProperty } from '@nestjs/swagger/dist/decorators';
 
 const options: SchemaOptions = {
   timestamps: true,
@@ -8,6 +9,14 @@ const options: SchemaOptions = {
 
 @Schema(options)
 export class Cat extends Document {
+  /**
+   * email 
+   * */
+  @ApiProperty({
+    example: 'dddd@naver.com',
+    description: 'email',
+    required: true,
+  })
   @Prop({
     required: true,
     unique: true,
@@ -16,6 +25,15 @@ export class Cat extends Document {
   @IsNotEmpty()
   email: string;
 
+
+  /**
+   * 이름 
+   * */
+  @ApiProperty({
+    example: '이름이다',
+    description: 'name',
+    required: true,
+  })
   @Prop({
     required: true,
   })
@@ -23,6 +41,14 @@ export class Cat extends Document {
   @IsNotEmpty()
   name: string;
 
+  /**
+   * 비밀번호 
+   * */
+  @ApiProperty({
+    example: '123456',
+    description: 'password',
+    required: true,
+  })
   @Prop({
     required: true,
   })
@@ -30,6 +56,9 @@ export class Cat extends Document {
   @IsNotEmpty()
   password: string;
 
+  /**
+   * 이미지 url 
+   * */
   @Prop()
   @IsString()
   imgUrl: string;
