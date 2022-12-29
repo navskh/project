@@ -33,6 +33,8 @@ export class AuthService {
 
     const payload = { email: email, sub: cat.id };
 
+    console.log(this.jwtService.sign(payload));
+
     return {
       token: this.jwtService.sign(payload),
     };

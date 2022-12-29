@@ -10,21 +10,22 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly catsRepository: CatsRepository) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      // secretOrKey: process.env.JWT_SECRET,
-      secretOrKey: 'secretKey',
+      secretOrKey: process.env.JWT_SECRET,
+      // secretOrKey: 'secretKey',
       ignoreExpiration: false,
     });
   }
-
   async validate(payload: Payload) {
-    // const cat = await this.catsRepository.findCatByIdWithoutPassword(
-    //   payload.sub,
-    // );
+    console.log('validate!');
 
-    // if (cat) {
-    //   return cat; // request.user
-    // } else {
-    //   throw new UnauthorizedException('접근 오류');
-    // }
+    const cat = await this.catsRepository.findCatByIdWithoutPassword(
+      payload.sub,
+    );
+
+    if (cat) {
+      return cat; // request.user
+    } else {
+      throw new UnauthorizedException('접근 오류');
+    }
   }
 }
