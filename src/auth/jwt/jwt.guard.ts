@@ -9,7 +9,6 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   handleRequest<TUser = any>(err: any, user: any, info: any, context: ExecutionContext, status?: any): TUser {
-    console.log(user, status, info);
     if (err || !user) {
       throw err || new UnauthorizedException('토큰에 문제가 있습니다.');
     }

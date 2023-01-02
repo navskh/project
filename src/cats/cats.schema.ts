@@ -10,7 +10,7 @@ const options: SchemaOptions = {
 @Schema(options)
 export class Cat extends Document {
   /**
-   * email 
+   * email
    * */
   @ApiProperty({
     example: 'dddd@naver.com',
@@ -25,9 +25,8 @@ export class Cat extends Document {
   @IsNotEmpty()
   email: string;
 
-
   /**
-   * 이름 
+   * 이름
    * */
   @ApiProperty({
     example: '이름이다',
@@ -42,7 +41,7 @@ export class Cat extends Document {
   name: string;
 
   /**
-   * 비밀번호 
+   * 비밀번호
    * */
   @ApiProperty({
     example: '123456',
@@ -57,13 +56,21 @@ export class Cat extends Document {
   password: string;
 
   /**
-   * 이미지 url 
+   * 이미지 url
    * */
-  @Prop()
+  @Prop({
+    default:
+      'https://raw.githubusercontent.com/amamov/teaching-nestjs-a-to-z/main/images/1.jpeg',
+  })
   @IsString()
   imgUrl: string;
 
-  readonly readOnlyData: { id: string; email: string; name: string };
+  readonly readOnlyData: {
+    id: string;
+    email: string;
+    name: string;
+    imgUrl: string;
+  };
 }
 
 export const CatSchema = SchemaFactory.createForClass(Cat);
@@ -73,5 +80,6 @@ CatSchema.virtual('readOnlyData').get(function (this: Cat) {
     id: this.id,
     email: this.email,
     name: this.name,
+    imgUrl: this.imgUrl,
   };
 });
