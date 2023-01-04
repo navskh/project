@@ -12,7 +12,7 @@ import {
   UseInterceptors,
   Body,
   UseGuards,
-  Req
+  Req,
 } from '@nestjs/common';
 import { UploadedFiles } from '@nestjs/common/decorators';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
@@ -77,10 +77,13 @@ export class CatsController {
   }
 
   @ApiOperation({ summary: '이미지 업로드' })
-  @UseInterceptors(FilesInterceptor('image', 10, multerOptions("cats")))
+  @UseInterceptors(FilesInterceptor('image', 10, multerOptions('cats')))
   @UseGuards(JwtAuthGuard)
   @Post('upload')
-  uploadCatImg(@UploadedFiles() files: Array<Express.Multer.File>, @CurrentUser() cat: Cat) {
+  uploadCatImg(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @CurrentUser() cat: Cat,
+  ) {
     console.log(files);
     // return 'uploadImg';
     // return { images: `http://localhost:8000/media/cats/${files[0].filename}` };
@@ -93,6 +96,4 @@ export class CatsController {
   getAllCat() {
     return this.catsService.getAllCat();
   }
-
-  
 }

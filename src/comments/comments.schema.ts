@@ -16,7 +16,7 @@ export class Comments extends Document {
   @Prop({
     type: Types.ObjectId,
     required: true,
-    ref: "cats"
+    ref: 'cats',
   })
   @IsNotEmpty()
   author: Types.ObjectId;
@@ -47,11 +47,10 @@ export class Comments extends Document {
   @Prop({
     type: Types.ObjectId,
     required: true,
-    ref: "cats"
+    ref: 'cats',
   })
   @IsNotEmpty()
   info: Types.ObjectId;
 }
 
 export const CommentsSchema = SchemaFactory.createForClass(Comments);
-
